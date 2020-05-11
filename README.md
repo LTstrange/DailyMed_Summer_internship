@@ -1,6 +1,6 @@
 # 大数据采集与存储实训——指导文档与代码
 
-[![GitHub stars](https://img.shields.io/github/stars/LTstrange/DailyMed_Summer_internship.svg)](https://github.com/LTstrange/DailyMed_Summer_internship/stargazers) [![GitHub forks](https://img.shields.io/github/forks/LTstrange/DailyMed_Summer_internship.svg)](https://github.com/LTstrange/DailyMed_Summer_internship/network)
+[![GitHub stars](https://img.shields.io/github/stars/LTstrange/DailyMed_Summer_internship.svg)](https://github.com/LTstrange/DailyMed_Summer_internship/stargazers) [![GitHub forks](https://img.shields.io/github/forks/LTstrange/DailyMed_Summer_internship.svg)](https://github.com/LTstrange/DailyMed_Summer_internship/network) [![GitHub license](https://img.shields.io/github/license/LTstrange/DailyMed_Summer_internship.svg)](https://github.com/LTstrange/DailyMed_Summer_internship/blob/master/LICENSE)
 
 ## 仓库说明
 
