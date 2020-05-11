@@ -171,6 +171,8 @@ def get_all_setIDs(address):
     return all_setIDs, start_ind
 ```
 
+***
+
 #### read_setIDs.py
 
 ##### 全局变量：
@@ -206,6 +208,8 @@ with open('setIDs.txt', 'w') as file:
     file.write(str(all_setIDs))
 ```
 
+***
+
 #### web_crawler_4_spl_sample.py
 
 ##### 主程序：
@@ -232,6 +236,8 @@ with open('spl_sample.xml', 'w', encoding='utf-8') as file:
 
 无
 
+***
+
 #### web_crawler_4_spls.py
 
 ##### 全局变量：
@@ -245,6 +251,8 @@ with open('spl_sample.xml', 'w', encoding='utf-8') as file:
 首先是整理出所有需要下载的setID，也就是在`web_crawler_4_setIDs.py`中下载的全部setID。
 
 ##### 函数定义：
+
+***
 
 #### web_crawler_4_ndcs.py（已弃用）
 
