@@ -14,7 +14,9 @@
 
 #### 第一部分：数据收集
 
-打开[DailyMed](https://dailymed.nlm.nih.gov)网站，搜索条的下面是左半边的新闻和右半边的各种下载链接[^1]。
+打开[DailyMed](https://dailymed.nlm.nih.gov)网站，搜索条的下面是左半边的新闻和右半边的各种下载链接。
+
+> 因网页更新及网站内容变化，网站页面可能与本文档描述有所出入。
 
 在右半边中，找到APPLICATION DEVELOPMENT SUPPORT，也就是 应用开发支持。其中的[Web Services](https://dailymed.nlm.nih.gov/dailymed/app-support-web-services.cfm)，就是介绍如何通过访问对应的网址，找到你所需要的数据。
 
@@ -26,7 +28,7 @@
 
 > SPL是structured Product Labeling的缩写，意为***结构化产品标签***。也就是对应药品的说明书。SPL格式的内容，与在搜索框中直接搜索药品时所给出的说明书，是同一格式，以及排版
 
-前面的 网页后缀：`/spls/`会给出网站所有药物的setID号码。在爬取完所有的setID后，就可以用每一个setID，替换`/spls/{SETID}`的对应位置，就可以下载该setID对应药物的说明书全文了。[^2]
+前面的 网页后缀：`/spls/`会给出网站所有药物的setID号码。在爬取完所有的setID后，就可以用每一个setID，替换`/spls/{SETID}`的对应位置，就可以下载该setID对应药物的说明书全文了。(详见代码)
 
 > 还有NDC（国家药品验证号）也是药物号码。但是，首先是一个药物对应多个NDC号码，在后面处理起来十分麻烦。二是没有通过NDC直接下载药物说明的连接，只能从搜索框中搜索，也是处理起来十分麻烦。
 >
@@ -163,17 +165,8 @@ def get_all_setIDs(address):
     return all_setIDs, start_ind
 ```
 
-
-
 #### web_crawler_4_spls.py
 
 #### web_crawler_4_spl_sample.py
 
 #### web_crawler_4_ndcs.py
-
-
-
-
-
-[^1]:因网页更新及网站内容变化，网站页面可能与本文档描述有所出入。
-[^2]: 详见代码。
