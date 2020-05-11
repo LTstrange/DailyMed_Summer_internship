@@ -6,7 +6,7 @@
 
 本仓库保存了华中农业大学，数据科学与大数据技术专业，暑期实训的 DailyMed 项目的全部代码。
 
-如有任何疑问，可以在issue中提出。
+如果对程序或者文档，有任何疑问，均可在[issue](https://github.com/LTstrange/DailyMed_Summer_internship/issues)中提出。
 
 本项目的实训指导书详见：[tutorial文档](#doc)。
 
@@ -80,7 +80,11 @@ DailyMed 是知名的药品说明书数据库，由美国国家药品图书馆�
 
 ##### 全局变量:
 
-在程序中，首先定义了TOTAL_PAGE和BATCH两个全局变量。其中，TOTAL_PAGE需要在实际爬取数据的时候，更换为实际的 总页数。总页数可以通过浏览器打开爬取setID的url，并在<metadata>中找到。
+在程序中，首先定义了TOTAL_PAGE和BATCH两个全局变量。其中，TOTAL_PAGE需要在实际爬取数据的时候，更换为实际的 总页数。
+
+> 因为网站内容变化，所以TOTAL_PAGE的大小可能会有所变化，需要以实际数目为准。
+>
+> 总页数可以通过浏览器打开爬取setID的url，并在<metadata>中找到。
 
 之后定义了需要爬取的url，和匹配setID的两个正则表达式。分别用来提取网页中的setID和已经下载了的setID。
 
@@ -232,10 +236,6 @@ with open('spl_sample.xml', 'w', encoding='utf-8') as file:
     file.write(content)
 ```
 
-##### 函数定义：
-
-无
-
 ***
 
 #### web_crawler_4_spls.py
@@ -248,7 +248,39 @@ with open('spl_sample.xml', 'w', encoding='utf-8') as file:
 
 由于主程序不需要分batch处理，所以整个程序结构相对比较简单。
 
-首先是整理出所有需要下载的setID，也就是在`web_crawler_4_setIDs.py`中下载的全部setID。
+首先是整理出所有需要下载的setID，也就是在`web_crawler_4_setIDs.py`中下载的，并交由`read_setIDs.py`整理汇总过，保存在setIDs.txt文件中的所有setIDs。
+
+```python
+# 整理所有需要下载的setID
+print('getting setIDs...')
+setIDs = []
+with open('setIDs.txt', 'r') as file:
+    content = file.read()
+    setIDs = re.findall(setID_comp, content)
+```
+
+之后，再读取已下载的SPL文件（以setID命名）的列表，去除掉已经被下载的setIDs。
+
+```python
+# 排除掉已经下载过的setID
+files = os.listdir('spls/')
+print('files len:', len(files))
+print('setIDs len:(before)', len(setIDs))
+for ind, SPL_file in tqdm(enumerate(files), total=len(files)):
+    ID = SPL_file[:-4]
+    try:
+        setIDs.remove(ID)
+    except ValueError:
+        print('{ID} not in setIDs'.format(ID=ID))
+        exit()
+print('setIDs len:(after)', len(setIDs))
+```
+
+
+
+> 由于网站的内容会更新，所以有可能会使得setID失效。
+
+
 
 ##### 函数定义：
 
