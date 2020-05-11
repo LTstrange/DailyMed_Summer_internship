@@ -7,7 +7,7 @@ from multiprocessing import Pool
 import re
 import os
 
-# 设置全局变量，将TOTAL_PAGE改为当时的总页数。BATCH根据网络状况自行调整
+# 设置全局变量，将TOTAL_PAGE改为当时的总页数。BATCH的大小根据网络状况自行调整
 TOTAL_PAGE = 1143
 BATCH = 20
 
