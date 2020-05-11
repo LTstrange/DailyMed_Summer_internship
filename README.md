@@ -1,12 +1,18 @@
 # 大数据采集与存储实训——指导文档与代码
 
+[![GitHub stars](https://img.shields.io/github/stars/LTstrange/DailyMed_Summer_internship.svg)](https://github.com/LTstrange/DailyMed_Summer_internship/stargazers) [![GitHub forks](https://img.shields.io/github/forks/LTstrange/DailyMed_Summer_internship.svg)](https://github.com/LTstrange/DailyMed_Summer_internship/network)
+
 ## 仓库说明
 
 本仓库保存了华中农业大学，数据科学与大数据技术专业，暑期实训的 DailyMed 项目的全部代码。
 
-本项目的实训指导书详见：[tutorial文档](#jump)。
+如有任何疑问，可以在issue中提出。
 
-## <span id="jump" >tutorial文档 </span>
+本项目的实训指导书详见：[tutorial文档](#doc)。
+
+DailyMed 是知名的药品说明书数据库，由美国国家药品图书馆管理，刊登最新的同时是精确的药物标签，给医疗行业从业者和大众提供药品知识服务。
+
+## <span id="doc" >tutorial文档 </span>
 
 ### 实训内容引导 
 
@@ -48,7 +54,7 @@
 
 我在尝试过后，推荐在下载setID这种每个xml只包含少量内容的文件时，最好分批次（batch）下载。同时开5个进程，一次下载20页内容（也就是一次下载20*100=2000个setID）。每下载完一个batch后，进行一次数据的整理和保存。保存完毕后，再下载下一个batch。
 
-如果程序正确，且下载顺利。所有下载下来的setID数量，应该与xml文件中的<metadata>中的<total_elements>中的数字一样（也可能会少几个，且网站每天都会更新，数量会有变化）。
+如果程序正确，且下载顺利。所有下载下来的setID数量，应该与下载下来的xml文件中的<metadata>中的<total_elements>中的数字一样（也可能会少几个，且网站每天都会更新，数量会有变化）。
 
 ##### Step2：爬取SPL
 
@@ -165,8 +171,86 @@ def get_all_setIDs(address):
     return all_setIDs, start_ind
 ```
 
-#### web_crawler_4_spls.py
+#### read_setIDs.py
+
+##### 全局变量：
+
+在程序中，定义了用于在已下载文件中，匹配setID的正则表达式。
+
+和用于收集数据的all_setIDs集合。
+
+##### 主程序：
+
+该程序实现了将`web_crawler_4_setIDs.py`下载的，由多个文件保存的setID，进行整理和整合。
+
+程序首先根据给出的保存地址，将所有依batch保存的文件名读出。
+
+再分别打开文件，读取文件内的内容，并用正则表达式找出保存的setIDs，保存在all_setIDs这个集合内。
+
+读取完毕后，将all_setIDs这个集合，转换为字符，保存在当前目录下的setIDs.txt中。
+
+```python
+files = os.listdir('setIDs')
+
+all_setIDs = set()
+
+for file in files:
+    with open('setIDs/' + file, 'r') as file:
+        content = file.read()
+        setIDs = re.findall(setID_comp, content)
+        all_setIDs.update(setIDs)
+
+print(len(all_setIDs))
+
+with open('setIDs.txt', 'w') as file:
+    file.write(str(all_setIDs))
+```
 
 #### web_crawler_4_spl_sample.py
 
-#### web_crawler_4_ndcs.py
+##### 主程序：
+
+该程序用于尝试下载一个特定的setID，所对应的的SPL说明书。并将该说明书，以"spl_sample.xml"为名，保存在本地。
+
+```python
+from urllib.request import urlopen
+
+content = ""
+
+print("linking to the url....")
+for line in urlopen('https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/8c3c252c-d9eb-4bbd-b13a-271b87abdffb.xml'):
+    line = line.decode('utf-8')
+    print('downloading data...')
+    content += line
+
+print('already download the data.')
+with open('spl_sample.xml', 'w', encoding='utf-8') as file:
+    file.write(content)
+```
+
+##### 函数定义：
+
+无
+
+#### web_crawler_4_spls.py
+
+##### 全局变量：
+
+在程序中，首先定义了用于匹配已下载的文件中，setID的正则表达式。并定义了需要爬取的页面的url。
+
+##### 主程序：
+
+由于主程序不需要分batch处理，所以整个程序结构相对比较简单。
+
+首先是整理出所有需要下载的setID，也就是在`web_crawler_4_setIDs.py`中下载的全部setID。
+
+##### 函数定义：
+
+#### web_crawler_4_ndcs.py（已弃用）
+
+##### 全局变量：
+
+##### 主程序：
+
+##### 函数定义：
+
