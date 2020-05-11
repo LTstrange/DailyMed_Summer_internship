@@ -56,7 +56,7 @@ DailyMed 是知名的药品说明书数据库，由美国国家药品图书馆�
 
 如果程序正确，且下载顺利。所有下载下来的setID数量，应该与下载下来的xml文件中的<metadata>中的<total_elements>中的数字一样（也可能会少几个，且网站每天都会更新，数量会有变化）。
 
-##### Step2：爬取SPL
+##### <span id="step2">Step2：爬取SPL </span>
 
 在获取到所有的setID后，就可以下载每种药物的SPL了。同样，由于对面网络极差，所以一步一存是非常有必要的。但是，对于SPL这种，每次下载的xml本身，就是我们所需要的内容，信息的密度很大。而且每个xml只包含一个药物的说明书，很明显需要分开存储。所以，在下载SPL的时候，更适合每一个连接存储一次，也就是每下载一个SPL就存起来。
 
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     print("already get previous data, start from {}".format(start_ind))
 ```
 
-其次，程序从`start_ind`开始，一次下载`BATCH`个页面，一直下载到`TOTAL_PAGE`。并在建立集合`batch_setIDs = set()`，收集当前batch的所有setID数据。之后开启多线程，轮流下载当前batch内的对应页码的数据。在下载完整个batch以后，将数据存储在`batch_setIDs`中，并更新到`all_setIDs`中。
+其次，程序从`start_ind`开始，一次下载`BATCH`个页面，一直下载到`TOTAL_PAGE`。并在建立集合`batch_setIDs = set()`，收集当前batch的所有setID数据。之后开启多进程，轮流下载当前batch内的对应页码的数据。在下载完整个batch以后，将数据存储在`batch_setIDs`中，并更新到`all_setIDs`中。
 
 ```python
 # 从start_ind开始下载
@@ -133,7 +133,7 @@ if __name__ == '__main__':
 
 ###### get_one_page(page_index):
 
-该函数是为了实现多线程，而单独定义出来。该函数就是简单地将对应页码的数据爬取出来，并返回给主进程。
+该函数是为了实现多进程，而单独定义出来。该函数就是简单地将对应页码的数据爬取出来，并返回给主进程。
 
 使用for循环，遍历爬取到的每一行内容，解码为utf8，并连接到`content`中。在用正则表达式，提取出所有的setID，返回给主进程。
 
@@ -276,13 +276,39 @@ for ind, SPL_file in tqdm(enumerate(files), total=len(files)):
 print('setIDs len:(after)', len(setIDs))
 ```
 
+最后，开启多进程，本样例开启了60个进程，具体原因详见[Step2：爬取SPL](#step2)
 
+```python
+# 开启多线程，并下载对应SPL说明书
+with Pool(60) as p:
+    p.map(download_SPL, setIDs)
+```
 
 > 由于网站的内容会更新，所以有可能会使得setID失效。
 
-
-
 ##### 函数定义：
+
+###### download_SPL(setID):
+
+该函数是为了实现多进程，而单独定义出来。该函数实现了将SPL爬取下来，并保存在本地的功能。其中包括对于超时和连接出错的异常的处理。
+
+```python
+# 根据setID下载SPL说明书
+def download_SPL(setID):
+    content = ''
+    # 尝试连接，并设置为超过10秒就断开连接
+    try:
+        for line in urlopen(url.format(setID=setID), timeout=10):
+            line = line.decode('utf-8')
+            content += line
+    # 只要出错，就暂时放弃这个连接，等待下次手动重启时，再重新下载
+    except:
+        print(traceback.format_exc().split('\n')[-2])
+        return
+    # 每下载完毕一个SPL说明书，就进行保存
+    with open('spls/{setID}.xml'.format(setID=setID), 'w', encoding='utf-8') as file:
+        file.write(content)
+```
 
 ***
 
