@@ -1,22 +1,10 @@
 # 大数据采集与存储实训——指导文档与代码
 
-目录：
-
-[toc]
-
 ## 仓库说明
 
 本仓库保存了华中农业大学，数据科学与大数据技术专业，暑期实训的 DailyMed 项目的全部代码。
 
 本项目的实训指导书详见：[tutorial文档](#jump)。
-
-
-
-
-
-
-
-
 
 ## <span id="jump" >tutorial文档 </span>
 
@@ -32,7 +20,7 @@
 
 进入web services后，页面中给出了相关的说明，以及资源网址:https://dailymed.nlm.nih.gov/dailymed/services/
 
->注意：在爬取对应数据时，一定要在网址的后面，加上v2，例：https://dailymed.nlm.nih.gov/dailymed/services/***v2***/spls.xml 。这一点在web sevices页面中，也进行了强调。
+>注意：在爬取对应数据时，一定要在网址的后面，加上v2，例：https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.xml 。这一点在web sevices页面中，也进行了强调。
 
 在网站给出的所有可用连接中，只有两个是我们需要的/spls 和 /spls/{SETID}。
 
