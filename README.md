@@ -8,9 +8,17 @@
 
 本仓库保存了华中农业大学，数据科学与大数据技术专业，暑期实训的 DailyMed 项目的全部代码。
 
-本项目的实训指导书详见：tutorial文档。
+本项目的实训指导书详见：[tutorial文档](#jump)。
 
-## tutorial文档 
+
+
+
+
+
+
+
+
+## <span id="jump" >tutorial文档 </span>
 
 ### 实训内容引导 
 
