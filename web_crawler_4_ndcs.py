@@ -1,4 +1,7 @@
-import time
+# -*- coding: utf-8 -*-
+# @Time    : 2020/5/11 19:54
+# @Author  : LTstrange
+
 from urllib.request import urlopen
 import re
 from multiprocessing import Pool
@@ -36,6 +39,3 @@ if __name__ == '__main__':
     with Pool(10) as p:
         p.map(run, [i for i in range(2601, 2701, 50)])
     print("finish")
-
-
-
