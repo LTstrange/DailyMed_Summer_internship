@@ -12,7 +12,7 @@
 
 DailyMed 是知名的药品说明书数据库，由美国国家药品图书馆管理，刊登最新的同时是精确的药物标签，给医疗行业从业者和大众提供药品知识服务。
 
-注意：read_nds.py 和 web_crawler_4_ndcs.py 已经弃用。详细原因请见tutorial文档。
+注意：read_nds.py 和 web_crawler_4_ndcs.py 已经弃用。详细原因，请见tutorial文档最后部分。
 
 ## <span id="doc" >tutorial文档 </span>
 
@@ -316,9 +316,22 @@ def download_SPL(setID):
 
 #### web_crawler_4_ndcs.py（已弃用）
 
+因为ndc码无法有效直接的找到对应药品，故而弃用本程序。
+
 ##### 全局变量：
 
 ##### 主程序：
 
 ##### 函数定义：
 
+***
+
+#### read_ndcs.py（已弃用）
+
+因为ndc码无法有效直接的找到对应药品，故而弃用本程序。
+
+##### 全局变量：
+
+##### 主程序：
+
+##### 函数定义：
