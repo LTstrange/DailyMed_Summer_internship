@@ -53,13 +53,20 @@ def get_one_page(page_index):
 
 
 if __name__ == '__main__':
-    print('starting..')
-    all_setIDs, start_ind = get_all_setIDs("setIDs")
-    # 修正start_ind
-    start_ind += BATCH
+    all_setIDs = set()
+    if not os.path.exists('setIDs'):
+        print("Directory 'setIDs' not exist. \nInitializing....")
+        path = os.getcwd()
+        os.mkdir(path + r'\setIDs')
+        start_ind = 1
+    else:
+        print('Re-starting..')
+        all_setIDs, start_ind = get_all_setIDs("setIDs")
+        # 修正start_ind
+        start_ind += BATCH
 
-    print('len of all_setIDs: {}'.format(len(all_setIDs)))
-    print("already get previous data, start from {}".format(start_ind))
+        print('len of all_setIDs: {}'.format(len(all_setIDs)))
+        print("already get previous data, start from {}".format(start_ind))
     # 从start_ind开始下载
     for start_page in range(start_ind, TOTAL_PAGE, BATCH):  # TOTAL_PAGE = 1142
         # 对一个batch的数据进行收集和处理
@@ -77,6 +84,8 @@ if __name__ == '__main__':
         print('saving...')
         with open('setIDs/setIDs_{}.txt'.format(start_page), 'w') as file:
             file.write(str(batch_setIDs))
+
+    print("All setIDs have been downloaded. Next, run 'read_setIDs.py'.")
 
 
 
