@@ -54,10 +54,11 @@ def get_one_page(page_index):
 
 if __name__ == '__main__':
     all_setIDs = set()
-    if not os.path.exists('setIDs'):
+    file_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.abspath(__file__)
+    if not os.path.exists(file_dir + r'\setIDs.txt'):
         print("Directory 'setIDs' not exist. \nInitializing....")
-        path = os.getcwd()
-        os.mkdir(path + r'\setIDs')
+        os.mkdir(file_path + r'\setIDs')
         print('starting..')
         start_ind = 1
     else:

@@ -8,7 +8,8 @@ import os
 # 用于匹配文件内setID的正则表达式
 setID_comp = re.compile(r'(?<=\')[a-zA-Z0-9\-]+?(?=\')')
 
-if not os.path.exists('setIDs'):
+file_dir = os.path.dirname(os.path.abspath(__file__))
+if not os.path.exists(file_dir+r'\setIDs.txt'):
     print("Please run 'web_crawler_4_setIDs.py' first. Then run this program.")
     exit()
 
