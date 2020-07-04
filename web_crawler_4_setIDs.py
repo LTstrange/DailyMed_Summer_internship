@@ -58,9 +58,11 @@ def get_one_page(page_index):
 
 if __name__ == '__main__':
     all_setIDs = set()
+    # 检查是否是首次运行
     if not os.path.exists(storge_dir):
         print("Directory 'setIDs' not exist. \nInitializing....")
-        os.mkdir(file_dir + r'\setIDs')
+        # 根据程序文件地址建立存储文件夹
+        os.mkdir(storge_dir)
         print('starting..')
         start_ind = 1
     else:
@@ -72,7 +74,7 @@ if __name__ == '__main__':
         print('len of all_setIDs: {}'.format(len(all_setIDs)))
         print("already get previous data, start from {}".format(start_ind))
     # 从start_ind开始下载
-    for start_page in range(start_ind, TOTAL_PAGE, BATCH):  # TOTAL_PAGE = 1142
+    for start_page in range(start_ind, TOTAL_PAGE, BATCH):
         # 对一个batch的数据进行收集和处理
         batch_setIDs = set()
         # 开始下载数据

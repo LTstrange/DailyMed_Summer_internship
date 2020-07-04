@@ -13,6 +13,11 @@ from tqdm import tqdm
 # 用来匹配setID的正则表达式
 setID_comp = re.compile(r'(?<=\')[a-zA-Z0-9\-]+?(?=\')')
 
+# 设置本文件的绝对地址
+file_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = file_dir+r'\setIDs.txt'
+storge_dir = file_dir + r'\spls'
+
 # 下载setID对应的说明书（spl）的网址
 url = 'https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/{setID}.xml'
 
@@ -27,28 +32,30 @@ def download_SPL(setID):
             content += line
     # 只要出错，就暂时放弃这个连接，等待下次手动重启时，再重新下载
     except:
-        print(traceback.format_exc().split('\n')[-2], end='->>>')
+        print(traceback.format_exc().split('\n')[-2], end=' ->>> setID:')
         print(setID)
         return
     # 每下载完毕一个SPL说明书，就进行保存
-    with open('spls/{setID}.xml'.format(setID=setID), 'w', encoding='utf-8') as file:
+    with open(storge_dir+r'\{setID}.xml'.format(setID=setID), 'w', encoding='utf-8') as file:
         file.write(content)
 
 
 if __name__ == '__main__':
-    file_dir = os.path.dirname(os.path.abspath(__file__))
-    if not os.path.exists(file_dir+r'\setIDs.txt'):
+    if not os.path.exists(file_path):
         print("Please run 'read_setIDs.py' first. Then run this program.")
         exit()
+
     # 整理所有需要下载的setID
     print('getting setIDs...')
     setIDs = []
-    with open('setIDs.txt', 'r') as file:
+    with open(file_path, 'r') as file:
         content = file.read()
         setIDs = re.findall(setID_comp, content)
-
+    if not os.path.exists(storge_dir):
+        print("Directory 'spls' not exist. \nInitializing....")
+        os.mkdir(storge_dir)
     # 排除掉已经下载过的setID
-    files = os.listdir('spls/')
+    files = os.listdir(storge_dir)
     print('files len:', len(files))
     print('setIDs len:(before)', len(setIDs))
     for ind, SPL_file in tqdm(enumerate(files), total=len(files)):
