@@ -58,6 +58,7 @@ if __name__ == '__main__':
         print("Directory 'setIDs' not exist. \nInitializing....")
         path = os.getcwd()
         os.mkdir(path + r'\setIDs')
+        print('starting..')
         start_ind = 1
     else:
         print('Re-starting..')
