@@ -35,7 +35,7 @@ print(f'已经整理出 {len(all_setIDs)} 个setID。')
 with open(file_dir+r'\setIDs.txt', 'w') as file:
     file.write(str(all_setIDs))
 
-
+print("所有setID已经整理完毕。下一步，请运行'web_crawler_4_spls.py'文件。")
 
 
 

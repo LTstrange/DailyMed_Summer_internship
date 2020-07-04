@@ -67,6 +67,7 @@ if __name__ == '__main__':
             print('{ID}在所有setIDs.txt中不存在'.format(ID=ID))
             exit()
     print(f'还需要下载{len(setIDs)}个SPL')
+    print("开始下载SPL文件....")
 
     # 开启多线程，并下载对应SPL说明书
     with Pool(60) as p:
