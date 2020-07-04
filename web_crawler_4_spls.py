@@ -36,6 +36,9 @@ def download_SPL(setID):
 
 
 if __name__ == '__main__':
+    if not os.path.exists('setIDs.txt'):
+        print("Please run 'read_setIDs.py' first. Then run this program.")
+        exit()
     # 整理所有需要下载的setID
     print('getting setIDs...')
     setIDs = []

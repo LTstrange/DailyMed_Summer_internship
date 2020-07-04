@@ -8,6 +8,10 @@ import os
 # 用于匹配文件内setID的正则表达式
 setID_comp = re.compile(r'(?<=\')[a-zA-Z0-9\-]+?(?=\')')
 
+if not os.path.exists('setIDs'):
+    print("Please run 'web_crawler_4_setIDs.py' first. Then run this program.")
+    exit()
+
 # 遍历给定目录下的所有文件名
 files = os.listdir('setIDs')
 
