@@ -27,7 +27,8 @@ def download_SPL(setID):
             content += line
     # 只要出错，就暂时放弃这个连接，等待下次手动重启时，再重新下载
     except:
-        print(traceback.format_exc().split('\n')[-2])
+        print(traceback.format_exc().split('\n')[-2], end='->>>')
+        print(setID)
         return
     # 每下载完毕一个SPL说明书，就进行保存
     with open('spls/{setID}.xml'.format(setID=setID), 'w', encoding='utf-8') as file:

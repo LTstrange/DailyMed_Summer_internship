@@ -8,7 +8,8 @@ import re
 import os
 
 # 设置全局变量，将TOTAL_PAGE改为当时的总页数。BATCH的大小根据网络状况自行调整
-TOTAL_PAGE = 1143
+TOTAL_ELEM = 124834
+TOTAL_PAGE = 1249
 BATCH = 20
 
 # 下载所有setID的网址链接
@@ -71,7 +72,7 @@ if __name__ == '__main__':
             for setIDs in pool_result:
                 batch_setIDs.update(setIDs)
                 all_setIDs.update(setIDs)
-        print("{:.2f}%, num of setID:{}".format((len(all_setIDs) / 114249)*100, len(all_setIDs)))
+        print("{:.2f}%, num of setID:{}".format((len(all_setIDs) / TOTAL_ELEM)*100, len(all_setIDs)))
         # 保存一个batch的setID数据
         print('saving...')
         with open('setIDs/setIDs_{}.txt'.format(start_page), 'w') as file:
