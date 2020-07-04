@@ -60,19 +60,19 @@ if __name__ == '__main__':
     all_setIDs = set()
     # 检查是否是首次运行
     if not os.path.exists(storge_dir):
-        print("Directory 'setIDs' not exist. \nInitializing....")
+        print("'setIDs' 文件夹不存在. \n正在初始化，并建立文件夹....")
         # 根据程序文件地址建立存储文件夹
         os.mkdir(storge_dir)
-        print('starting..')
+        print('开始爬取setIDs..')
         start_ind = 1
     else:
-        print('Re-starting..')
+        print('程序恢复中....')
         all_setIDs, start_ind = get_all_setIDs(storge_dir)
         # 修正start_ind
         start_ind += BATCH
 
-        print('len of all_setIDs: {}'.format(len(all_setIDs)))
-        print("already get previous data, start from {}".format(start_ind))
+        print('已下载的setIDs总数为: {}'.format(len(all_setIDs)))
+        print("已经收集完已下载数据, 开始从 {} 页下载".format(start_ind))
     # 从start_ind开始下载
     for start_page in range(start_ind, TOTAL_PAGE, BATCH):
         # 对一个batch的数据进行收集和处理
@@ -81,17 +81,17 @@ if __name__ == '__main__':
         with Pool(5) as p:
             pool_result = p.map(get_one_page, [page_index for page_index in range(start_page, start_page + BATCH)])
             # 收集一个batch的数据
-            print('\ncollecting pool result....')
+            print('\n收集线程池数据中....')
             for setIDs in pool_result:
                 batch_setIDs.update(setIDs)
                 all_setIDs.update(setIDs)
-        print("{:.2f}%, num of setID:{}".format((len(all_setIDs) / TOTAL_ELEM)*100, len(all_setIDs)))
+        print("已下载{:.2f}%, 共 {} 个setID".format((len(all_setIDs) / TOTAL_ELEM)*100, len(all_setIDs)))
         # 保存一个batch的setID数据
-        print('saving...')
+        print('保存该批次中...')
         with open(storge_dir+r'/setIDs_{}.txt'.format(start_page), 'w') as file:
             file.write(str(batch_setIDs))
 
-    print("All setIDs have been downloaded. Next, run 'read_setIDs.py'.")
+    print("所有setID已经下载完毕。下一步，请运行'read_setIDs.py'文件。")
 
 
 

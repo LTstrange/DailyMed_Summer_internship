@@ -12,8 +12,9 @@ setID_comp = re.compile(r'(?<=\')[a-zA-Z0-9\-]+?(?=\')')
 file_dir = os.path.dirname(os.path.abspath(__file__))
 storge_dir = file_dir + r'\setIDs'
 
+# 检查程序运行所需的文件是否存在
 if not os.path.exists(file_dir+r'\setIDs'):
-    print("Please run 'web_crawler_4_setIDs.py' first. Then run this program.")
+    print("请先运行'web_crawler_4_setIDs.py'文件。再运行此程序。")
     exit()
 
 # 遍历给定目录下的所有文件名
@@ -28,7 +29,7 @@ for file in files:
         setIDs = re.findall(setID_comp, content)
         all_setIDs.update(setIDs)
 
-print(f'Sorted out {len(all_setIDs)} setIDs')
+print(f'已经整理出 {len(all_setIDs)} 个setID。')
 
 # 创建setIDs.txt文件并保存
 with open(file_dir+r'\setIDs.txt', 'w') as file:
