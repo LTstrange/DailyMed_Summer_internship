@@ -12,6 +12,10 @@ TOTAL_ELEM = 124834
 TOTAL_PAGE = 1249
 BATCH = 20
 
+# 设置相对于文件的存储位置
+file_dir = os.path.dirname(os.path.abspath(__file__))
+storge_dir = file_dir + r'\setIDs'
+
 # 下载所有setID的网址链接
 url = 'https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.xml'
 # 匹配setID的正则表达式
@@ -54,15 +58,14 @@ def get_one_page(page_index):
 
 if __name__ == '__main__':
     all_setIDs = set()
-    file_dir = os.path.dirname(os.path.abspath(__file__))
-    if not os.path.exists(file_dir + r'\setIDs.txt'):
+    if not os.path.exists(storge_dir):
         print("Directory 'setIDs' not exist. \nInitializing....")
         os.mkdir(file_dir + r'\setIDs')
         print('starting..')
         start_ind = 1
     else:
         print('Re-starting..')
-        all_setIDs, start_ind = get_all_setIDs("setIDs")
+        all_setIDs, start_ind = get_all_setIDs(storge_dir)
         # 修正start_ind
         start_ind += BATCH
 
@@ -83,7 +86,7 @@ if __name__ == '__main__':
         print("{:.2f}%, num of setID:{}".format((len(all_setIDs) / TOTAL_ELEM)*100, len(all_setIDs)))
         # 保存一个batch的setID数据
         print('saving...')
-        with open('setIDs/setIDs_{}.txt'.format(start_page), 'w') as file:
+        with open(storge_dir+r'/setIDs_{}.txt'.format(start_page), 'w') as file:
             file.write(str(batch_setIDs))
 
     print("All setIDs have been downloaded. Next, run 'read_setIDs.py'.")
