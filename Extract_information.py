@@ -15,7 +15,7 @@ file_dir = os.path.dirname(file_path)
 SPL_dir = os.path.join(file_dir, 'spls')
 json_dir = os.path.join(file_dir, 'jsons')
 
-BATCH = 5000
+BATCH = 1000
 spls = os.listdir(SPL_dir)
 
 
