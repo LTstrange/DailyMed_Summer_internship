@@ -67,8 +67,8 @@ def trans_xml_2_json(ind):
 
 
 if __name__ == '__main__':
-    count = 25
-    for start_ind in range(120000, len(spls), BATCH):
+    count = 1
+    for start_ind in range(0, len(spls), BATCH):
         with Pool(5) as p:
             js_list = p.map(trans_xml_2_json, [ind for ind in range(start_ind, start_ind + BATCH)])
 
